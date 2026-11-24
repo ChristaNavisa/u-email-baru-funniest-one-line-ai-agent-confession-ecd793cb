@@ -28,12 +28,15 @@ function outputDir(): string {
   return process.env.MAKEFUN_OUTPUT_DIR ?? "/output";
 }
 
-function main(): void {
-  checkLine(CONFESSION);
-  const dir = outputDir();
+function writeEntry(dir: string, line: string): void {
   mkdirSync(dir, { recursive: true });
   // No trailing newline: the file holds exactly the one line.
-  writeFileSync(join(dir, "entry.txt"), CONFESSION, "utf8");
+  writeFileSync(join(dir, "entry.txt"), line, "utf8");
+}
+
+function main(): void {
+  checkLine(CONFESSION);
+  writeEntry(outputDir(), CONFESSION);
 }
 
 main();
